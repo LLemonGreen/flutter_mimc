@@ -47,14 +47,14 @@ class MIMCEvents {
 }
 
 class FlutterMIMC {
-  static FlutterMIMC _instance;
+  static FlutterMIMC? _instance;
   static FlutterMIMC get _getInstance {
-    if (_instance != null) return _instance;
+    if (_instance != null) return _instance!;
     _instance = FlutterMIMC();
-    return _instance;
+    return _instance!;
   }
 
-  MIMCServices services;
+  late MIMCServices services;
 
   final MethodChannel _channel = MethodChannel('flutter_mimc');
   final EventChannel _eventChannel = EventChannel('flutter_mimc.event');
@@ -162,18 +162,18 @@ class FlutterMIMC {
   /// initMImcInvokeMethod
   Future<dynamic> _initMImcInvokeMethod(String tokenString,
       {bool debug = false}) async {
-        try{
-          await _channel
-              .invokeMethod(_ON_INIT, {"token": tokenString, "debug": debug});
-          _initEvent();
-          var mImcUserMap = jsonDecode(tokenString);
-          String _token = await getToken();
-          String _appId = await getAppId();
-          services = MIMCServices(mImcUserMap['data']["token"] ?? _token,
-              mImcUserMap['data']["appId"] ?? _appId);
-        }catch(e){
-          debugPrint(e.toString());
-        }
+    try {
+      await _channel
+          .invokeMethod(_ON_INIT, {"token": tokenString, "debug": debug});
+      _initEvent();
+      var mImcUserMap = jsonDecode(tokenString);
+      String _token = await getToken();
+      String _appId = await getAppId();
+      services = MIMCServices(mImcUserMap['data']["token"] ?? _token,
+          mImcUserMap['data']["appId"] ?? _appId);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   /// FlutterMIMC constrct
@@ -186,10 +186,10 @@ class FlutterMIMC {
   ///  [appAccount] String appAccount   Session account（business platform unique ID）
   static Future<FlutterMIMC> init(
       {bool debug = false,
-      String appId,
-      String appKey,
-      String appSecret,
-      String appAccount}) async {
+      required String appId,
+      required String appKey,
+      required String appSecret,
+      required String appAccount}) async {
     assert(appId != null && appId.isNotEmpty);
     assert(appKey != null && appKey.isNotEmpty);
     assert(appSecret != null && appSecret.isNotEmpty);
@@ -201,7 +201,7 @@ class FlutterMIMC {
         appSecret: appSecret);
     print(res.data);
     await _getInstance._initMImcInvokeMethod(jsonEncode(res), debug: debug);
-    return _instance;
+    return _instance!;
   }
 
   ///  * init
@@ -210,7 +210,7 @@ class FlutterMIMC {
       {bool debug = false}) async {
     assert(tokenString != null && tokenString.isNotEmpty);
     await _getInstance._initMImcInvokeMethod(tokenString, debug: debug);
-    return _instance;
+    return _instance!;
   }
 
   /// login
@@ -284,10 +284,10 @@ class FlutterMIMC {
   /// [users] group members，"1,2,3"
   /// [extra] extra
   Future<MIMCResponse> createGroup(
-      {String topicName, String accounts, String extra}) async {
+      {String? topicName, String? accounts, String? extra}) async {
     assert(topicName != null && topicName.isNotEmpty);
     return await services.createGroup(
-        topicName: topicName, accounts: accounts, extra: extra);
+        topicName: topicName!, accounts: accounts!, extra: extra!);
   }
 
   /// Query specified group information
@@ -305,9 +305,9 @@ class FlutterMIMC {
   /// Invite users to join the group
   /// [topicId] group ID
   /// [accounts] Group member，English comma between multiple members(,)Separate
-  Future<MIMCResponse> joinGroup({String topicId, String accounts}) async {
+  Future<MIMCResponse> joinGroup({String? topicId, String? accounts}) async {
     assert(topicId != null && topicId.isNotEmpty);
-    return await services.joinGroup(topicId: topicId, accounts: accounts);
+    return await services.joinGroup(topicId: topicId!, accounts: accounts!);
   }
 
   /// Non-group master user quit group
@@ -332,19 +332,19 @@ class FlutterMIMC {
   /// [bulletin] Group announcement
   /// [extra] Group extra
   Future<MIMCResponse> updateGroup({
-    String topicId,
-    String ownerAccount,
-    String topicName,
-    String bulletin,
-    String extra,
+    required String topicId,
+    String? ownerAccount,
+    required String topicName,
+    String? bulletin,
+    String? extra,
   }) async {
     assert(topicId != null);
     return await services.updateGroup(
       topicId: topicId,
-      ownerAccount: ownerAccount,
+      ownerAccount: ownerAccount!,
       topicName: topicName,
-      bulletin: bulletin,
-      extra: extra,
+      bulletin: bulletin!,
+      extra: extra!,
     );
   }
 
@@ -370,17 +370,17 @@ class FlutterMIMC {
   ///   * note：[utcFromTime] And [utcToTimeTime] interval cannot exceed 24 hours，The query status is[utcFromTime,utcToTime)，Unit milliseconds, UTC time
   Future<MIMCResponse> pullP2PHistory(
     PullHistoryType pullHistoryType, {
-    String toAccount,
-    String fromAccount,
-    String utcFromTime,
-    String utcToTime,
+    required String toAccount,
+    required String fromAccount,
+    required String utcFromTime,
+    required String utcToTime,
     int count = 20,
     String bizType = "",
     String extra = "",
     bool getAllExtra = false,
-    Map<String, dynamic> extraFilterMap,
-    String startSeq,
-    String stopSeq,
+    Map<String, dynamic>? extraFilterMap,
+    String? startSeq,
+    String? stopSeq,
   }) async {
     assert(pullHistoryType != null);
     assert(toAccount != null && toAccount.isNotEmpty);
@@ -397,9 +397,9 @@ class FlutterMIMC {
       extra: extra,
       count: count,
       getAllExtra: getAllExtra,
-      extraFilterMap: extraFilterMap,
-      startSeq: startSeq,
-      stopSeq: stopSeq,
+      extraFilterMap: extraFilterMap!,
+      startSeq: startSeq!,
+      stopSeq: stopSeq!,
     );
   }
 
@@ -418,17 +418,17 @@ class FlutterMIMC {
   ///  * note：[utcFromTime] And [utcToTimeTime] interval cannot exceed 24 hours，The query status is[utcFromTime,utcToTime)，Unit milliseconds, UTC time
   Future<MIMCResponse> pullP2THistory(
     PullHistoryType pullHistoryType, {
-    String account,
-    String topicId,
-    String utcFromTime,
-    String utcToTime,
+    required String account,
+    required String topicId,
+    required String utcFromTime,
+    required String utcToTime,
     int count = 20,
     String bizType = "",
     String extra = "",
     bool getAllExtra = false,
-    Map<String, dynamic> extraFilterMap,
-    String startSeq,
-    String stopSeq,
+    Map<String, dynamic>? extraFilterMap,
+    String? startSeq,
+    String? stopSeq,
   }) async {
     assert(account != null && account.isNotEmpty);
     assert(topicId != null && topicId.isNotEmpty);
@@ -444,9 +444,9 @@ class FlutterMIMC {
       extra: extra,
       count: count,
       getAllExtra: getAllExtra,
-      extraFilterMap: extraFilterMap,
-      startSeq: startSeq,
-      stopSeq: stopSeq,
+      extraFilterMap: extraFilterMap!,
+      startSeq: startSeq!,
+      stopSeq: stopSeq!,
     );
   }
 
@@ -460,10 +460,10 @@ class FlutterMIMC {
   /// [extra]       extra
   ///  * note：[utcFromTime] And [utcToTimeTime] interval cannot exceed 24 hours，The query status is[utcFromTime,utcToTime)，Unit milliseconds, UTC time
   Future<MIMCResponse> pullP2UHistory(PullHistoryType pullHistoryType,
-      {String account,
-      String topicId,
-      String utcFromTime,
-      String utcToTime,
+      {required String account,
+      required String topicId,
+      required String utcFromTime,
+      required String utcToTime,
       int count = 20,
       String bizType = "",
       String extra = ""}) async {
@@ -489,20 +489,20 @@ class FlutterMIMC {
   /// [sequence]   sequence
   Future<MIMCResponse> updatePullP2PExtra(
       {bool isMultiUpdate = false,
-      Map<String, dynamic> sequenceExtraMap,
-      String toAccount,
-      String fromAccount,
-      String extra,
-      String sequence}) async {
+      Map<String, dynamic>? sequenceExtraMap,
+      required String toAccount,
+      required String fromAccount,
+      String? extra,
+      String? sequence}) async {
     assert(toAccount != null && toAccount.isNotEmpty);
     assert(fromAccount != null && fromAccount.isNotEmpty);
     return await services.updatePullP2PExtra(
       isMultiUpdate: isMultiUpdate,
-      sequenceExtraMap: sequenceExtraMap,
+      sequenceExtraMap: sequenceExtraMap!,
       toAccount: toAccount,
       fromAccount: fromAccount,
-      extra: extra,
-      sequence: sequence,
+      extra: extra!,
+      sequence: sequence!,
     );
   }
 
@@ -513,11 +513,11 @@ class FlutterMIMC {
   /// [extraValue]  extraValue
   /// [sequence]   sequence
   Future<MIMCResponse> updatePullP2PExtraV2({
-    String toAccount,
-    String fromAccount,
-    String sequence,
-    String extraKey,
-    String extraValue,
+    required String toAccount,
+    required String fromAccount,
+    required String sequence,
+    String? extraKey,
+    String? extraValue,
   }) async {
     assert(toAccount != null && toAccount.isNotEmpty);
     assert(fromAccount != null && fromAccount.isNotEmpty);
@@ -525,8 +525,8 @@ class FlutterMIMC {
         toAccount: toAccount,
         fromAccount: fromAccount,
         sequence: sequence,
-        extraKey: extraKey,
-        extraValue: extraValue);
+        extraKey: extraKey!,
+        extraValue: extraValue!);
   }
 
   /// update Multi extra pullP2P
@@ -535,10 +535,10 @@ class FlutterMIMC {
   /// [extraKeyMap]  extraKeyMap
   /// [sequence]   sequence
   Future<MIMCResponse> updatePullP2PMultiExtra({
-    String toAccount,
-    String fromAccount,
-    String sequence,
-    Map<String, String> extraKeyMap,
+    required String toAccount,
+    required String fromAccount,
+    required String sequence,
+    Map<String, String>? extraKeyMap,
   }) async {
     assert(toAccount != null && toAccount.isNotEmpty);
     assert(fromAccount != null && fromAccount.isNotEmpty);
@@ -546,7 +546,7 @@ class FlutterMIMC {
         toAccount: toAccount,
         fromAccount: fromAccount,
         sequence: sequence,
-        extraKeyMap: extraKeyMap);
+        extraKeyMap: extraKeyMap!);
   }
 
   /// updatePullP2TExtra update pullP2T extra
@@ -556,19 +556,19 @@ class FlutterMIMC {
   /// [sequence]   sequence
   Future<MIMCResponse> updatePullP2TExtra(
       {bool isMultiUpdate = false,
-      Map<String, dynamic> sequenceExtraMap,
-      String account,
-      String topicId,
-      String extra,
-      String sequence}) async {
+      Map<String, dynamic>? sequenceExtraMap,
+      required String account,
+      required String topicId,
+      String? extra,
+      required String sequence}) async {
     assert(account != null && account.isNotEmpty);
     assert(topicId != null && topicId.isNotEmpty);
     return await services.updatePullP2TExtra(
       isMultiUpdate: isMultiUpdate,
-      sequenceExtraMap: sequenceExtraMap,
+      sequenceExtraMap: sequenceExtraMap!,
       account: account,
       topicId: topicId,
-      extra: extra,
+      extra: extra!,
       sequence: sequence,
     );
   }
@@ -581,19 +581,19 @@ class FlutterMIMC {
   /// [extraKey]   extraKey
   Future<MIMCResponse> updatePullP2TExtraV2(
       {bool isMultiUpdate = false,
-      Map<String, dynamic> sequenceExtraMap,
-      String account,
-      String topicId,
-      String extraKey,
-      String extraValue,
-      String sequence}) async {
+      Map<String, dynamic>? sequenceExtraMap,
+      required String account,
+      required String topicId,
+      String? extraKey,
+      String? extraValue,
+      required String sequence}) async {
     assert(account != null && account.isNotEmpty);
     assert(topicId != null && topicId.isNotEmpty);
     return await services.updatePullP2TExtraV2(
       account: account,
       topicId: topicId,
-      extraKey: extraKey,
-      extraValue: extraValue,
+      extraKey: extraKey!,
+      extraValue: extraValue!,
       sequence: sequence,
     );
   }
@@ -602,9 +602,9 @@ class FlutterMIMC {
   /// [topicName] group name
   /// [extra] group extra
   Future<MIMCResponse> createUnlimitedGroup(
-      {String topicName, String extra}) async {
+      {required String topicName, String? extra}) async {
     return await services.createUnlimitedGroup(
-        topicName: topicName, extra: extra);
+        topicName: topicName, extra: extra!);
   }
 
   /// join unlimited group
@@ -634,7 +634,7 @@ class FlutterMIMC {
   /// Query unlimited group members
   /// [topicId] group id
   Future<MIMCResponse> queryUnlimitedGroupMembers(
-      {String topicId, String startUuid = "0"}) async {
+      {required String topicId, String startUuid = "0"}) async {
     assert(topicId != null && topicId.isNotEmpty);
     return await services.queryUnlimitedGroupMembers(
         topicId: topicId, startUuid: startUuid);
@@ -661,7 +661,7 @@ class FlutterMIMC {
 
   /// delete unlimited group
   /// [topicId] group id
-  Future<MIMCResponse> deleteUnlimitedGroup({String topicId}) async {
+  Future<MIMCResponse> deleteUnlimitedGroup({required String topicId}) async {
     assert(topicId != null && topicId.isNotEmpty);
     return await services.deleteUnlimitedGroup(topicId: topicId);
   }
@@ -673,44 +673,47 @@ class FlutterMIMC {
   ///  * update unlimited group info，[topicId]Required, other parameters must be filled in one
   ///  * Owner can transfer，New Owner must be in the group
   Future<MIMCResponse> updateUnlimitedGroup(
-      {String topicId,
-      String topicName,
-      String ownerAccount,
-      String extra}) async {
+      {required String topicId,
+      required String topicName,
+      String? ownerAccount,
+      String? extra}) async {
     assert(topicId != null && topicId.isNotEmpty);
     return await services.updateUnlimitedGroup(
       topicId: topicId,
       topicName: topicName,
-      ownerAccount: ownerAccount,
-      extra: extra,
+      ownerAccount: ownerAccount!,
+      extra: extra!,
     );
   }
 
   ///  get contact
   ///  [isV2] api is v2 version
-  Future<MIMCResponse> getContact({bool isV2 = true,bool msgExtraFlag = true}) async {
-    return await services.getContact(isV2: isV2,msgExtraFlag: msgExtraFlag);
+  Future<MIMCResponse> getContact(
+      {bool isV2 = true, bool msgExtraFlag = true}) async {
+    return await services.getContact(isV2: isV2, msgExtraFlag: msgExtraFlag);
   }
 
   ///  updateContactP2PExtra
   ///  [account] account
   ///  [extra] extra
   Future<MIMCResponse> updateContactP2PExtra({
-    String account,
-    String extra,
+    required String account,
+    String? extra,
   }) async {
     assert(account != null);
-    return await services.updateContactP2PExtra(account: account, extra: extra);
+    return await services.updateContactP2PExtra(
+        account: account, extra: extra!);
   }
 
   /// updateContactP2TExtra
   ///  [topicId] topicId
   ///  [extra] extra
   Future<MIMCResponse> updateContactP2TExtra({
-    String topicId,
-    String extra,
+    required String topicId,
+    String? extra,
   }) async {
-    return await services.updateContactP2TExtra(topicId: topicId, extra: extra);
+    return await services.updateContactP2TExtra(
+        topicId: topicId, extra: extra!);
   }
 
   ///  set BlackList
@@ -742,7 +745,7 @@ class FlutterMIMC {
   /// [blackAccount]
   /// [blackTopicId]
   Future<MIMCResponse> setGroupBlackList(
-      {String blackAccount, String blackTopicId}) async {
+      {required String blackAccount, required String blackTopicId}) async {
     assert(blackAccount != null && blackAccount.isNotEmpty);
     assert(blackTopicId != null && blackTopicId.isNotEmpty);
     return await services.setGroupBlackList(
@@ -755,7 +758,7 @@ class FlutterMIMC {
   ///  [blackAccount]
   ///  [blackTopicId]
   Future<MIMCResponse> deleteGroupBlackList(
-      {String blackAccount, String blackTopicId}) async {
+      {required String blackAccount, required String blackTopicId}) async {
     assert(blackAccount != null && blackAccount.isNotEmpty);
     assert(blackTopicId != null && blackTopicId.isNotEmpty);
     return await services.deleteGroupBlackList(
@@ -768,7 +771,7 @@ class FlutterMIMC {
   ///  [blackAccount]
   ///  [blackTopicId]
   Future<MIMCResponse> hasGroupBlackList(
-      {String blackAccount, String blackTopicId}) async {
+      {required String blackAccount, required String blackTopicId}) async {
     assert(blackAccount != null && blackAccount.isNotEmpty);
     assert(blackTopicId != null && blackTopicId.isNotEmpty);
     return await services.hasGroupBlackList(
@@ -942,7 +945,7 @@ class FlutterMIMC {
   }
 
   /// event error
-  void _errorListener(Object obj) {
+  void _errorListener(PlatformException obj) {
     final PlatformException e = obj;
     debugPrint("eventError===$obj");
     throw e;

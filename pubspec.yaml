@@ -4,13 +4,13 @@ version: 1.0.2
 homepage: https://github.com/chenxianqi/flutter_mimc
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  dio: ^3.0.8
+  dio: ^4.0.0
 
 dev_dependencies:
   flutter_test:

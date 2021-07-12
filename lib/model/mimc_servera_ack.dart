@@ -1,9 +1,9 @@
 class MimcServeraAck {
-  String packetId;
-  int timestamp;
-  String desc;
-  int sequence;
-  int code;
+  String? packetId;
+  int? timestamp;
+  String? desc;
+  int? sequence;
+  int? code;
 
   MimcServeraAck(
       {this.packetId, this.timestamp, this.desc, this.sequence, this.code});

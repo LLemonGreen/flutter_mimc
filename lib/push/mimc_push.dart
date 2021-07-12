@@ -3,18 +3,18 @@ import 'package:flutter_mimc/model/mimc_response.dart';
 
 /// MIMCPush
 class MIMCPush {
-  Dio _http;
-  final String mImcAppId;
-  final String mImcAppKey;
-  final String mImcAppSecret;
-  static const String _domain = "https://mimc.chat.xiaomi.net";
+  Dio? _http;
+  final String? mImcAppId;
+  final String? mImcAppKey;
+  final String? mImcAppSecret;
+  static const String? _domain = "https://mimc.chat.xiaomi.net";
 
   MIMCPush({this.mImcAppId, this.mImcAppKey, this.mImcAppSecret}) {
     assert(mImcAppId != null);
     assert(mImcAppKey != null);
     assert(mImcAppSecret != null);
     BaseOptions options = new BaseOptions(
-        baseUrl: _domain,
+        baseUrl: _domain!,
         connectTimeout: 10000,
         receiveTimeout: 5000,
         headers: {
@@ -26,19 +26,19 @@ class MIMCPush {
 
   /// push p2p
   Future<MIMCResponse> pushP2PMessage(
-      {String fromAccount,
-      String toAccount,
-      String fromResource,
-      String msg,
-      String msgType,
+      {String? fromAccount,
+      String? toAccount,
+      String? fromResource,
+      String? msg,
+      String? msgType,
       bool isStore = false,
-      String bizType}) async {
+      String? bizType}) async {
     assert(fromResource != null);
     assert(msg != null);
     assert(toAccount != null);
     assert(fromAccount != null);
-    String api = _domain + "/api/push/p2p/";
-    Response response = await _http.post(api, data: {
+    String? api = _domain! + "/api/push/p2p/";
+    Response response = await _http!.post(api, data: {
       "appId": mImcAppId,
       "appKey": mImcAppKey,
       "appSecret": mImcAppSecret,
@@ -55,19 +55,19 @@ class MIMCPush {
 
   /// push p2p more
   Future<MIMCResponse> pushP2PMoreMessage(
-      {String fromAccount,
-      List<String> toAccounts,
-      String fromResource,
-      String msg,
-      String msgType,
+      {String? fromAccount,
+      List<String>? toAccounts,
+      String? fromResource,
+      String? msg,
+      String? msgType,
       bool isStore = false,
-      String bizType}) async {
+      String? bizType}) async {
     assert(fromResource != null);
     assert(msg != null);
     assert(toAccounts != null);
     assert(fromAccount != null);
-    String api = _domain + "/api/push/p2p/more/";
-    Response response = await _http.post(api, data: {
+    String? api = _domain! + "/api/push/p2p/more/";
+    Response response = await _http!.post(api, data: {
       "appId": mImcAppId,
       "appKey": mImcAppKey,
       "appSecret": mImcAppSecret,
@@ -84,19 +84,19 @@ class MIMCPush {
 
   /// push p2t
   Future<MIMCResponse> pushP2TMessage(
-      {String fromAccount,
-      String topicId,
-      String fromResource,
-      String msg,
-      String msgType,
+      {String? fromAccount,
+      String? topicId,
+      String? fromResource,
+      String? msg,
+      String? msgType,
       bool isStore = false,
-      String bizType}) async {
+      String? bizType}) async {
     assert(fromResource != null);
     assert(msg != null);
     assert(topicId != null);
     assert(fromAccount != null);
-    String api = _domain + "/api/push/p2t/";
-    Response response = await _http.post(api, data: {
+    String? api = _domain! + "/api/push/p2t/";
+    Response response = await _http!.post(api, data: {
       "appId": mImcAppId,
       "appKey": mImcAppKey,
       "appSecret": mImcAppSecret,
@@ -113,19 +113,19 @@ class MIMCPush {
 
   /// push p2t more
   Future<MIMCResponse> pushP2TMoreMessage(
-      {String fromAccount,
-      List<dynamic> topicIds,
-      String fromResource,
-      String msg,
-      String msgType,
+      {String? fromAccount,
+      List<dynamic>? topicIds,
+      String? fromResource,
+      String? msg,
+      String? msgType,
       bool isStore = false,
-      String bizType}) async {
+      String? bizType}) async {
     assert(fromResource != null);
     assert(msg != null);
     assert(topicIds != null);
     assert(fromAccount != null);
-    String api = _domain + "/api/push/p2t/more/";
-    Response response = await _http.post(api, data: {
+    String? api = _domain! + "/api/push/p2t/more/";
+    Response response = await _http!.post(api, data: {
       "appId": mImcAppId,
       "appKey": mImcAppKey,
       "appSecret": mImcAppSecret,
@@ -142,19 +142,19 @@ class MIMCPush {
 
   /// push p2u
   Future<MIMCResponse> pushP2UMessage(
-      {String fromAccount,
-      String topicId,
-      String fromResource,
-      String message,
-      String msgType,
+      {String? fromAccount,
+      String? topicId,
+      String? fromResource,
+      String? message,
+      String? msgType,
       bool isStore = false,
-      String bizType}) async {
+      String? bizType}) async {
     assert(fromResource != null);
     assert(message != null);
     assert(topicId != null);
     assert(fromAccount != null);
-    String api = _domain + "/api/push/ucs/singleMsgPush/";
-    Response response = await _http.post(api, data: {
+    String? api = _domain! + "/api/push/ucs/singleMsgPush/";
+    Response response = await _http!.post(api, data: {
       "appId": mImcAppId,
       "appKey": mImcAppKey,
       "appSecret": mImcAppSecret,
@@ -171,19 +171,19 @@ class MIMCPush {
 
   /// push p2u more
   Future<MIMCResponse> pushP2UMoreMessage(
-      {String fromAccount,
-      String topicId,
-      String fromResource,
-      List<dynamic> messages,
-      String msgType,
+      {String? fromAccount,
+      String? topicId,
+      String? fromResource,
+      List<dynamic>? messages,
+      String? msgType,
       bool isStore = false,
-      String bizType}) async {
+      String? bizType}) async {
     assert(fromResource != null);
     assert(messages != null);
     assert(topicId != null);
     assert(fromAccount != null);
-    String api = _domain + "/api/push/ucs/multiMsgPush/";
-    Response response = await _http.post(api, data: {
+    String? api = _domain! + "/api/push/ucs/multiMsgPush/";
+    Response response = await _http!.post(api, data: {
       "appId": mImcAppId,
       "appKey": mImcAppKey,
       "appSecret": mImcAppSecret,
@@ -200,19 +200,19 @@ class MIMCPush {
 
   /// push multi Topic
   Future<MIMCResponse> pushMultiTopicMessage(
-      {String fromAccount,
-      List<dynamic> topicIds,
-      String fromResource,
-      String message,
-      String msgType,
+      {String? fromAccount,
+      List<dynamic>? topicIds,
+      String? fromResource,
+      String? message,
+      String? msgType,
       bool isStore = false,
-      String bizType}) async {
+      String? bizType}) async {
     assert(fromResource != null);
     assert(message != null);
     assert(topicIds != null);
     assert(fromAccount != null);
-    String api = _domain + "/api/push/ucs/multiTopicPush/";
-    Response response = await _http.post(api, data: {
+    String? api = _domain! + "/api/push/ucs/multiTopicPush/";
+    Response response = await _http!.post(api, data: {
       "appId": mImcAppId,
       "appKey": mImcAppKey,
       "appSecret": mImcAppSecret,

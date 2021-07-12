@@ -1,12 +1,12 @@
 class MIMCMessage {
-  num sequence;
-  String toAccount;
-  String bizType;
-  num timestamp;
-  String fromAccount;
-  int topicId;
-  String payload;
-  bool isStore;
+  num? sequence;
+  String? toAccount;
+  String? bizType;
+  num? timestamp;
+  String? fromAccount;
+  int? topicId;
+  String? payload;
+  bool? isStore;
   MIMCMessage(
       {this.toAccount,
       this.bizType,

@@ -1,6 +1,6 @@
 class MIMCResponse {
-  int code;
-  String message;
+  int? code;
+  String? message;
   dynamic data;
 
   MIMCResponse({this.code, this.message, this.data});
