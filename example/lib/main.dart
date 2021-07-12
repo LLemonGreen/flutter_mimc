@@ -11,8 +11,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  FlutterMIMC flutterMimc;
-  MIMCPush mImcPush;
+  FlutterMIMC flutterMimc = FlutterMIMC();
+  MIMCPush mImcPush = MIMCPush();
   final String appAccount = "100165"; // 我的账号
   String groupID = "21351198708203520"; // 操作的普通群ID
   String maxGroupID = "21360844399443968"; // 操作的无限通群ID
@@ -75,8 +75,8 @@ class _MyAppState extends State<MyApp> {
     String id = accountCtr.value.text;
     String content = contentCtr.value.text;
 
-    if (id == null || id.isEmpty || content == null || content.isEmpty) {
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
+    if (id.isEmpty || content.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("id 或 content参数错误"),
         backgroundColor: Colors.pink,
       ));
@@ -573,7 +573,7 @@ class _MyAppState extends State<MyApp> {
 
     // 接收单聊
     flutterMimc.addEventListenerHandleMessage().listen((MIMCMessage message) {
-      String content = utf8.decode(base64.decode(message.payload));
+      String content = utf8.decode(base64.decode(message.payload!));
       addLog("收到${message.fromAccount}消息: $content");
       setState(() {});
     }).onError((err) {
@@ -584,7 +584,7 @@ class _MyAppState extends State<MyApp> {
     flutterMimc
         .addEventListenerHandleGroupMessage()
         .listen((MIMCMessage message) {
-      String content = utf8.decode(base64.decode(message.payload));
+      String content = utf8.decode(base64.decode(message.payload!));
       addLog("收到群${message.topicId}消息: $content");
       setState(() {});
     }).onError((err) {
@@ -709,8 +709,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('FlutterMimc example app'),
           actions: <Widget>[
-            RaisedButton(
-              color: Colors.blue,
+            ElevatedButton(
               onPressed: isOnline ? logout : login,
               child: Text(
                 isOnline ? "退出登录" : "登录",
@@ -742,8 +741,7 @@ class _MyAppState extends State<MyApp> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      RaisedButton(
-                        color: Colors.blue,
+                      ElevatedButton(
                         onPressed: () => sendMessage(0),
                         child: Text(
                           "发送单聊",
@@ -753,8 +751,7 @@ class _MyAppState extends State<MyApp> {
                       VerticalDivider(
                         width: 10.0,
                       ),
-                      RaisedButton(
-                        color: Colors.blue,
+                      ElevatedButton(
                         onPressed: () => sendMessage(3),
                         child: Text(
                           "发送在线消息",
@@ -769,8 +766,7 @@ class _MyAppState extends State<MyApp> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      RaisedButton(
-                        color: Colors.blue,
+                      ElevatedButton(
                         onPressed: () => sendMessage(1),
                         child: Text(
                           "发送群聊",
@@ -780,8 +776,7 @@ class _MyAppState extends State<MyApp> {
                       VerticalDivider(
                         width: 10.0,
                       ),
-                      RaisedButton(
-                        color: Colors.blue,
+                      ElevatedButton(
                         onPressed: () => sendMessage(2),
                         child: Text(
                           "发送无限群聊",
@@ -925,8 +920,8 @@ class _MyAppState extends State<MyApp> {
                         itemCount: logs.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            title: Text(logs[index]['content']),
-                            subtitle: Text(logs[index]['date']),
+                            title: Text(logs[index]['content']!),
+                            subtitle: Text(logs[index]['date']!),
                           );
                         }),
                   )
