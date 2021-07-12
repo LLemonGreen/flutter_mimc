@@ -939,7 +939,7 @@ class FlutterMIMC {
   }
 
   /// event error
-  void _errorListener(PlatformException obj) {
+  void _errorListener(dynamic obj) {
     final PlatformException e = obj;
     debugPrint("eventError===$obj");
     throw e;
