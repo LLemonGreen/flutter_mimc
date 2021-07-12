@@ -7,3 +7,5 @@
 build/
 .idea/workspace.xml
 example/build/
+.fvm/flutter_sdk
+.fvm/fvm_config.json
