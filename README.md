@@ -1,9 +1,12 @@
 ## Flutter_mimc 无脑暴力空安全版本
+## 修改了_initMImcInvokeMethod，所以init方法无效，建议使用stringTokenInit初始化，更安全
 
+```yaml
 flutter_mimc:
     git:
       url: https://github.com/LLemonGreen/flutter_mimc.git
       ref: master
+ ```
 
 ## 以下为原项目文档
 
