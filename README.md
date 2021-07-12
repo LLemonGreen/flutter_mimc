@@ -1,5 +1,9 @@
 ## Flutter_mimc 无脑暴力空安全版本
 
+flutter_mimc:
+    git:
+      url: https://github.com/LLemonGreen/flutter_mimc.git
+      ref: master
 
 ## 以下为原项目文档
 
