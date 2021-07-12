@@ -167,10 +167,10 @@ class FlutterMIMC {
           .invokeMethod(_ON_INIT, {"token": tokenString, "debug": debug});
       _initEvent();
       var mImcUserMap = jsonDecode(tokenString);
-      String _token = await getToken();
-      String _appId = await getAppId();
-      services = MIMCServices(mImcUserMap['data']["token"] ?? _token,
-          mImcUserMap['data']["appId"] ?? _appId);
+      // String _token = await getToken();
+      // String _appId = await getAppId();
+      services = MIMCServices(
+          mImcUserMap['data']["token"], mImcUserMap['data']["appId"]);
     } catch (e) {
       debugPrint(e.toString());
     }
