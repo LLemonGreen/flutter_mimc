@@ -366,10 +366,10 @@ class FlutterMIMC {
   ///   * note：[utcFromTime] And [utcToTimeTime] interval cannot exceed 24 hours，The query status is[utcFromTime,utcToTime)，Unit milliseconds, UTC time
   Future<MIMCResponse> pullP2PHistory(
     PullHistoryType pullHistoryType, {
-    required String toAccount,
-    required String fromAccount,
-    required String utcFromTime,
-    required String utcToTime,
+    String? toAccount,
+    String? fromAccount,
+    String? utcFromTime,
+    String? utcToTime,
     int count = 20,
     String bizType = "",
     String extra = "",
@@ -378,10 +378,6 @@ class FlutterMIMC {
     String? startSeq,
     String? stopSeq,
   }) async {
-    assert(toAccount.isNotEmpty);
-    assert(fromAccount.isNotEmpty);
-    assert(utcFromTime.isNotEmpty);
-    assert(utcToTime.isNotEmpty);
     return await services.pullP2PHistory(
       pullHistoryType: pullHistoryType,
       toAccount: toAccount,
@@ -413,10 +409,10 @@ class FlutterMIMC {
   ///  * note：[utcFromTime] And [utcToTimeTime] interval cannot exceed 24 hours，The query status is[utcFromTime,utcToTime)，Unit milliseconds, UTC time
   Future<MIMCResponse> pullP2THistory(
     PullHistoryType pullHistoryType, {
-    required String account,
-    required String topicId,
-    required String utcFromTime,
-    required String utcToTime,
+    String? account,
+    String? topicId,
+    String? utcFromTime,
+    String? utcToTime,
     int count = 20,
     String bizType = "",
     String extra = "",
@@ -425,10 +421,6 @@ class FlutterMIMC {
     String? startSeq,
     String? stopSeq,
   }) async {
-    assert(account.isNotEmpty);
-    assert(topicId.isNotEmpty);
-    assert(utcFromTime.isNotEmpty);
-    assert(utcToTime.isNotEmpty);
     return await services.pullP2THistory(
       pullHistoryType: pullHistoryType,
       account: account,
