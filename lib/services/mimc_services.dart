@@ -61,17 +61,17 @@ class MIMCServices {
     }
     Response response = await _http!.post(api,
         data: removeMapNullValueKey({
-          "toAccount": toAccount,
-          "fromAccount": fromAccount,
-          "utcFromTime": utcFromTime,
-          "utcToTime": utcToTime,
-          "bizType": bizType,
-          "extra": extra,
-          "count": count,
-          "extraFilterMap": extraFilterMap,
-          "getAllExtra": getAllExtra,
-          "startSeq": startSeq,
-          "stopSeq": stopSeq,
+          "toAccount": toAccount!,
+          "fromAccount": fromAccount!,
+          "utcFromTime": utcFromTime!,
+          "utcToTime": utcToTime!,
+          "bizType": bizType!,
+          "extra": extra!,
+          "count": count!,
+          "extraFilterMap": extraFilterMap!,
+          "getAllExtra": getAllExtra!,
+          "startSeq": startSeq!,
+          "stopSeq": stopSeq!,
         }));
     return MIMCResponse.fromJson(response.data);
   }
@@ -108,17 +108,17 @@ class MIMCServices {
     }
     Response response = await _http!.post(api,
         data: removeMapNullValueKey({
-          "account": account,
-          "topicId": topicId,
-          "utcFromTime": utcFromTime,
-          "utcToTime": utcToTime,
-          "bizType": bizType,
-          "extra": extra,
-          "count": count,
-          "extraFilterMap": extraFilterMap,
-          "getAllExtra": getAllExtra,
-          "startSeq": startSeq,
-          "stopSeq": stopSeq,
+          "account": account!,
+          "topicId": topicId!,
+          "utcFromTime": utcFromTime!,
+          "utcToTime": utcToTime!,
+          "bizType": bizType!,
+          "extra": extra!,
+          "count": count!,
+          "extraFilterMap": extraFilterMap!,
+          "getAllExtra": getAllExtra!,
+          "startSeq": startSeq!,
+          "stopSeq": stopSeq!,
         }));
     return MIMCResponse.fromJson(response.data);
   }
@@ -148,13 +148,13 @@ class MIMCServices {
     }
     Response response = await _http!.post(api,
         data: removeMapNullValueKey({
-          "account": account,
-          "topicId": topicId,
-          "utcFromTime": utcFromTime,
-          "utcToTime": utcToTime,
-          "bizType": bizType,
-          "extra": extra,
-          "count": count
+          "account": account!,
+          "topicId": topicId!,
+          "utcFromTime": utcFromTime!,
+          "utcToTime": utcToTime!,
+          "bizType": bizType!,
+          "extra": extra!,
+          "count": count!
         }));
     return MIMCResponse.fromJson(response.data);
   }
