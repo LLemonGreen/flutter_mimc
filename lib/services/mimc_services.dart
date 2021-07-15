@@ -47,31 +47,31 @@ class MIMCServices {
     String? api = _domain;
     switch (pullHistoryType!) {
       case PullHistoryType.queryOnTime:
-        api = '/api/msg/p2p/queryOnTime/' + api!;
+        api = api! + '/api/msg/p2p/queryOnTime/';
         break;
       case PullHistoryType.queryOnCount:
-        api = '/api/msg/p2p/queryOnCount/' + api!;
+        api = api! + '/api/msg/p2p/queryOnCount/';
         break;
       case PullHistoryType.queryOnCountV2:
-        api = '/api/msg/p2p/queryOnCount/v2/' + api!;
+        api = api! + '/api/msg/p2p/queryOnCount/v2/';
         break;
       case PullHistoryType.queryOnSequence:
-        api = '/api/msg/p2p/queryOnSequence/' + api!;
+        api = api! + '/api/msg/p2p/queryOnSequence/';
         break;
     }
     Response response = await _http!.post(api,
         data: removeMapNullValueKey({
-          "toAccount": toAccount!,
-          "fromAccount": fromAccount!,
-          "utcFromTime": utcFromTime!,
-          "utcToTime": utcToTime!,
-          "bizType": bizType!,
-          "extra": extra!,
-          "count": count!,
-          "extraFilterMap": extraFilterMap!,
-          "getAllExtra": getAllExtra!,
-          "startSeq": startSeq!,
-          "stopSeq": stopSeq!,
+          "toAccount": toAccount,
+          "fromAccount": fromAccount,
+          "utcFromTime": utcFromTime,
+          "utcToTime": utcToTime,
+          "bizType": bizType,
+          "extra": extra,
+          "count": count,
+          "extraFilterMap": extraFilterMap,
+          "getAllExtra": getAllExtra,
+          "startSeq": startSeq,
+          "stopSeq": stopSeq,
         }));
     return MIMCResponse.fromJson(response.data);
   }
@@ -94,31 +94,31 @@ class MIMCServices {
     String? api = _domain;
     switch (pullHistoryType!) {
       case PullHistoryType.queryOnTime:
-        api = '/api/msg/p2t/queryOnTime/' + api!;
+        api = api! + '/api/msg/p2t/queryOnTime/';
         break;
       case PullHistoryType.queryOnCount:
-        api = '/api/msg/p2t/queryOnCount/' + api!;
+        api = api! + '/api/msg/p2t/queryOnCount/';
         break;
       case PullHistoryType.queryOnCountV2:
-        api = '/api/msg/p2t/queryOnCount/v2/' + api!;
+        api = api! + '/api/msg/p2t/queryOnCount/v2/';
         break;
       case PullHistoryType.queryOnSequence:
-        api = '/api/msg/p2t/queryOnSequence/' + api!;
+        api = api! + '/api/msg/p2t/queryOnSequence/';
         break;
     }
     Response response = await _http!.post(api,
         data: removeMapNullValueKey({
-          "account": account!,
-          "topicId": topicId!,
-          "utcFromTime": utcFromTime!,
-          "utcToTime": utcToTime!,
-          "bizType": bizType!,
-          "extra": extra!,
-          "count": count!,
-          "extraFilterMap": extraFilterMap!,
-          "getAllExtra": getAllExtra!,
-          "startSeq": startSeq!,
-          "stopSeq": stopSeq!,
+          "account": account,
+          "topicId": topicId,
+          "utcFromTime": utcFromTime,
+          "utcToTime": utcToTime,
+          "bizType": bizType,
+          "extra": extra,
+          "count": count,
+          "extraFilterMap": extraFilterMap,
+          "getAllExtra": getAllExtra,
+          "startSeq": startSeq,
+          "stopSeq": stopSeq,
         }));
     return MIMCResponse.fromJson(response.data);
   }
@@ -137,10 +137,10 @@ class MIMCServices {
     String? api = _domain;
     switch (pullHistoryType!) {
       case PullHistoryType.queryOnTime:
-        api = '/api/msg/p2u/queryOnTime/' + api!;
+        api = api! + '/api/msg/p2u/queryOnTime/';
         break;
       case PullHistoryType.queryOnCount:
-        api = '/api/msg/p2u/queryOnCount/' + api!;
+        api = api! + '/api/msg/p2u/queryOnCount/';
         break;
       case PullHistoryType.queryOnCountV2:
       case PullHistoryType.queryOnSequence:
@@ -148,13 +148,13 @@ class MIMCServices {
     }
     Response response = await _http!.post(api,
         data: removeMapNullValueKey({
-          "account": account!,
-          "topicId": topicId!,
-          "utcFromTime": utcFromTime!,
-          "utcToTime": utcToTime!,
-          "bizType": bizType!,
-          "extra": extra!,
-          "count": count!
+          "account": account,
+          "topicId": topicId,
+          "utcFromTime": utcFromTime,
+          "utcToTime": utcToTime,
+          "bizType": bizType,
+          "extra": extra,
+          "count": count
         }));
     return MIMCResponse.fromJson(response.data);
   }
