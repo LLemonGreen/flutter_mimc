@@ -284,7 +284,7 @@ class FlutterMIMC {
       {String? topicName, String? accounts, String? extra}) async {
     assert(topicName != null && topicName.isNotEmpty);
     return await services.createGroup(
-        topicName: topicName!, accounts: accounts!, extra: extra!);
+        topicName: topicName, accounts: accounts, extra: extra);
   }
 
   /// Query specified group information
@@ -304,7 +304,7 @@ class FlutterMIMC {
   /// [accounts] Group member，English comma between multiple members(,)Separate
   Future<MIMCResponse> joinGroup({String? topicId, String? accounts}) async {
     assert(topicId != null && topicId.isNotEmpty);
-    return await services.joinGroup(topicId: topicId!, accounts: accounts!);
+    return await services.joinGroup(topicId: topicId, accounts: accounts);
   }
 
   /// Non-group master user quit group
@@ -339,8 +339,8 @@ class FlutterMIMC {
       topicId: topicId,
       ownerAccount: ownerAccount!,
       topicName: topicName,
-      bulletin: bulletin!,
-      extra: extra!,
+      bulletin: bulletin,
+      extra: extra,
     );
   }
 
@@ -392,9 +392,9 @@ class FlutterMIMC {
       extra: extra,
       count: count,
       getAllExtra: getAllExtra,
-      extraFilterMap: extraFilterMap!,
-      startSeq: startSeq!,
-      stopSeq: stopSeq!,
+      extraFilterMap: extraFilterMap,
+      startSeq: startSeq,
+      stopSeq: stopSeq,
     );
   }
 
@@ -439,9 +439,9 @@ class FlutterMIMC {
       extra: extra,
       count: count,
       getAllExtra: getAllExtra,
-      extraFilterMap: extraFilterMap!,
-      startSeq: startSeq!,
-      stopSeq: stopSeq!,
+      extraFilterMap: extraFilterMap,
+      startSeq: startSeq,
+      stopSeq: stopSeq,
     );
   }
 
@@ -493,11 +493,11 @@ class FlutterMIMC {
     assert(fromAccount.isNotEmpty);
     return await services.updatePullP2PExtra(
       isMultiUpdate: isMultiUpdate,
-      sequenceExtraMap: sequenceExtraMap!,
+      sequenceExtraMap: sequenceExtraMap,
       toAccount: toAccount,
       fromAccount: fromAccount,
-      extra: extra!,
-      sequence: sequence!,
+      extra: extra,
+      sequence: sequence,
     );
   }
 
@@ -520,8 +520,8 @@ class FlutterMIMC {
         toAccount: toAccount,
         fromAccount: fromAccount,
         sequence: sequence,
-        extraKey: extraKey!,
-        extraValue: extraValue!);
+        extraKey: extraKey,
+        extraValue: extraValue);
   }
 
   /// update Multi extra pullP2P
@@ -541,7 +541,7 @@ class FlutterMIMC {
         toAccount: toAccount,
         fromAccount: fromAccount,
         sequence: sequence,
-        extraKeyMap: extraKeyMap!);
+        extraKeyMap: extraKeyMap);
   }
 
   /// updatePullP2TExtra update pullP2T extra
@@ -560,10 +560,10 @@ class FlutterMIMC {
     assert(topicId.isNotEmpty);
     return await services.updatePullP2TExtra(
       isMultiUpdate: isMultiUpdate,
-      sequenceExtraMap: sequenceExtraMap!,
+      sequenceExtraMap: sequenceExtraMap,
       account: account,
       topicId: topicId,
-      extra: extra!,
+      extra: extra,
       sequence: sequence,
     );
   }
@@ -587,8 +587,8 @@ class FlutterMIMC {
     return await services.updatePullP2TExtraV2(
       account: account,
       topicId: topicId,
-      extraKey: extraKey!,
-      extraValue: extraValue!,
+      extraKey: extraKey,
+      extraValue: extraValue,
       sequence: sequence,
     );
   }
@@ -599,7 +599,7 @@ class FlutterMIMC {
   Future<MIMCResponse> createUnlimitedGroup(
       {required String topicName, String? extra}) async {
     return await services.createUnlimitedGroup(
-        topicName: topicName, extra: extra!);
+        topicName: topicName, extra: extra);
   }
 
   /// join unlimited group
@@ -676,8 +676,8 @@ class FlutterMIMC {
     return await services.updateUnlimitedGroup(
       topicId: topicId,
       topicName: topicName,
-      ownerAccount: ownerAccount!,
-      extra: extra!,
+      ownerAccount: ownerAccount,
+      extra: extra,
     );
   }
 
