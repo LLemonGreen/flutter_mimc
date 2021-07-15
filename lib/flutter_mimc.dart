@@ -337,7 +337,7 @@ class FlutterMIMC {
   }) async {
     return await services.updateGroup(
       topicId: topicId,
-      ownerAccount: ownerAccount!,
+      ownerAccount: ownerAccount,
       topicName: topicName,
       bulletin: bulletin,
       extra: extra,
@@ -695,8 +695,7 @@ class FlutterMIMC {
     required String account,
     String? extra,
   }) async {
-    return await services.updateContactP2PExtra(
-        account: account, extra: extra!);
+    return await services.updateContactP2PExtra(account: account, extra: extra);
   }
 
   /// updateContactP2TExtra
@@ -706,8 +705,7 @@ class FlutterMIMC {
     required String topicId,
     String? extra,
   }) async {
-    return await services.updateContactP2TExtra(
-        topicId: topicId, extra: extra!);
+    return await services.updateContactP2TExtra(topicId: topicId, extra: extra);
   }
 
   ///  set BlackList
