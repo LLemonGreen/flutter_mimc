@@ -25,7 +25,7 @@ class MIMCServices {
 
   // remove empty key
   Map<String, dynamic> removeMapNullValueKey(Map<String, dynamic> json) {
-    json.removeWhere((key, value) => value == null || value == "");
+    json.removeWhere((k, v) => v == null);
     return json;
   }
 

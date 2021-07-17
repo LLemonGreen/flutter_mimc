@@ -113,6 +113,7 @@ class MIMCUserManager {
         if(mimcUser == null){
             return false;
         }
+
         return MIMCConstant.OnlineStatus.ONLINE == mStatus;
     }
 
@@ -169,7 +170,7 @@ class MIMCUserManager {
 
     // 发送单聊
     String sendMsg(String toAppAccount, byte[] payload, String bizType,boolean isStore) {
-        return mimcUser.sendMessage(toAppAccount, payload, bizType,isStore);
+        return mimcUser.sendMessage(toAppAccount, payload, bizType,isStore,true);
     }
 
     // 发送在线消息
@@ -344,7 +345,7 @@ class MIMCUserManager {
         }
 
         @Override
-        public boolean onPullNotification() {
+        public boolean onPullNotification(long minSequence, long maxSequence) {
             onHandleMIMCMsgListener.onPullNotification();
             return true;
         }

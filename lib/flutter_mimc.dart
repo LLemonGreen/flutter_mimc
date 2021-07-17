@@ -161,7 +161,7 @@ class FlutterMIMC {
 
   /// initMImcInvokeMethod
   Future<dynamic> _initMImcInvokeMethod(String tokenString,
-      {bool debug = false}) async {
+      {bool debug = true}) async {
     try {
       await _channel
           .invokeMethod(_ON_INIT, {"token": tokenString, "debug": debug});
@@ -207,7 +207,7 @@ class FlutterMIMC {
   ///  * init
   ///  * String tokenString  Obtained by server signature
   static Future<FlutterMIMC> stringTokenInit(String tokenString,
-      {bool debug = false}) async {
+      {bool debug = true}) async {
     assert(tokenString.isNotEmpty);
     await _getInstance._initMImcInvokeMethod(tokenString, debug: debug);
     return _instance!;
@@ -258,7 +258,11 @@ class FlutterMIMC {
 
   /// Send a single chat message
   Future<String> sendMessage(MIMCMessage message) async {
-    return await _channel.invokeMethod(_ON_SEND_MESSAGE, message.toJson());
+    print("A: " + message.toJson().toString());
+    Map<String, dynamic> p = message.toJson();
+    p.removeWhere((k, v) => v == null);
+    print(p);
+    return await _channel.invokeMethod(_ON_SEND_MESSAGE, p);
   }
 
   /// Send a online chat message
