@@ -169,6 +169,10 @@ class FlutterMIMC {
       var mImcUserMap = jsonDecode(tokenString);
       // String _token = await getToken();
       // String _appId = await getAppId();
+      print("========================");
+      print(mImcUserMap['data']["appPackage"]);
+      print("========================");
+
       services = MIMCServices(
           mImcUserMap['data']["token"], mImcUserMap['data']["appId"]);
     } catch (e) {
@@ -375,9 +379,9 @@ class FlutterMIMC {
     String? utcFromTime,
     String? utcToTime,
     int count = 20,
-    String bizType = "",
-    String extra = "",
-    bool getAllExtra = false,
+    String? bizType,
+    String? extra,
+    bool? getAllExtra,
     Map<String, dynamic>? extraFilterMap,
     String? startSeq,
     String? stopSeq,

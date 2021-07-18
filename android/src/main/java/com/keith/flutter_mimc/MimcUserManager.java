@@ -21,6 +21,7 @@ class MIMCUserManager {
     // 配置信息
     private long appId;
     private String appAccount;
+    private String appPackage;
 
     // 用户登录APP的帐号
     private static String tokenString;
@@ -36,6 +37,11 @@ class MIMCUserManager {
             com.alibaba.fastjson.JSONObject tokenMap = JSON.parseObject(tokenString);
             this.appId = Long.parseLong(tokenMap.getJSONObject("data").getString("appId"));
             this.appAccount = tokenMap.getJSONObject("data").getString("appAccount");
+            this.appPackage = tokenMap.getJSONObject("data").getString("appPackage");
+            System.out.println("====================init==========================");
+            System.out.println(this.appPackage);
+            System.out.println("====================init==========================");
+
             newMIMCUser();
         }catch (Exception e){
             System.err.println(e.getMessage());
@@ -86,13 +92,35 @@ class MIMCUserManager {
             }
         });
         MIMCLog.setLogPrintLevel(MIMCLog.DEBUG);
-        MIMCLog.setLogSaveLevel(MIMCLog.DEBUG);
+        MIMCLog.setLogSaveLevel(MIMCLog.NONE);
     }
 
     // 登录
     void login(){
+        System.out.println("这里在登录。。。");
         if(mimcUser != null){
-            mimcUser.login();
+            System.out.println("这里将调用mimcUser.login()");
+            System.out.println(isOnline());
+            System.out.println(mimcUser.getOnlineStatus());
+            System.out.println(mStatus);
+            try {
+               if(mimcUser.login()) {
+                   System.out.println("这里登录成功了！！！");
+                   mimcUser.setOnlineStatus(MIMCConstant.OnlineStatus.ONLINE);
+                }
+
+            }catch (Exception e){
+                MIMCLog.getStackTraceString(e);
+            }
+            System.out.println(isOnline());
+            System.out.println(mimcUser.getOnlineStatus());
+            System.out.println(mStatus);
+
+            System.out.println("这里获取一下登录状态");
+            isOnline();
+            System.out.println(isOnline());
+            System.out.println(mimcUser.getOnlineStatus());
+            System.out.println(mStatus);
         }
     }
 
@@ -170,7 +198,13 @@ class MIMCUserManager {
 
     // 发送单聊
     String sendMsg(String toAppAccount, byte[] payload, String bizType,boolean isStore) {
-        return mimcUser.sendMessage(toAppAccount, payload, bizType,isStore,true);
+        MIMCLog.w("MIMCUser", "这里在发送消息。。。");
+        System.out.println("这里在发送消息。。。");
+        System.out.println(mimcUser.getOnlineStatus());
+String a = mimcUser.sendMessage(toAppAccount, payload, bizType,isStore);
+        System.out.println(a);
+
+        return a;
     }
 
     // 发送在线消息
@@ -212,7 +246,7 @@ class MIMCUserManager {
 
         // create new user
         mimcUser = MIMCUser.newInstance(appId, appAccount, null);
-
+mimcUser.setAppPackage(this.appPackage);
         // 注册相关监听，必须
         mimcUser.registerTokenFetcher(new TokenFetcherString());
         mimcUser.registerMessageHandler(new MessageHandler());
@@ -254,6 +288,8 @@ class MIMCUserManager {
     class OnlineStatusListener implements MIMCOnlineStatusListener {
         @Override
         public void statusChange(MIMCConstant.OnlineStatus status, String type, String reason, String desc) {
+            System.out.println("这里是状态回调。。。");
+            System.out.println(status);
             mStatus = status;
             onHandleMIMCMsgListener.onHandleStatusChanged(status);
         }
@@ -345,7 +381,7 @@ class MIMCUserManager {
         }
 
         @Override
-        public boolean onPullNotification(long minSequence, long maxSequence) {
+        public boolean onPullNotification(long minSequence, long maxSequence ){
             onHandleMIMCMsgListener.onPullNotification();
             return true;
         }

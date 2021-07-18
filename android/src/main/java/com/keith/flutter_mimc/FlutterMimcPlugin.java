@@ -145,7 +145,9 @@ public class FlutterMimcPlugin implements FlutterPlugin, MethodCallHandler {
       case "init": {
         String token = call.argument("token");
         Boolean isDebug = call.argument("debug");
+        System.out.println("这里在init");
         if (isDebug) {
+          System.out.println("这里开启了log");
           mimcUserManager.openLog();
         }
         mimcUserManager.init(token);
@@ -190,7 +192,7 @@ public class FlutterMimcPlugin implements FlutterPlugin, MethodCallHandler {
 
       // 登录
       case "login":
-        System.out.println("login");
+//        System.out.println("login");
         mimcUserManager.login();
         result.success(null);
 

@@ -8,6 +8,7 @@ class MIMCServices {
   Dio? _http;
   String? _mImcAppId;
   String? _mImcToken;
+  String? _appPackage;
   static const String? _domain = "https://mimc.chat.xiaomi.net";
 
   MIMCServices(this._mImcToken, this._mImcAppId) {
@@ -59,6 +60,21 @@ class MIMCServices {
         api = api! + '/api/msg/p2p/queryOnSequence/';
         break;
     }
+
+    var p = removeMapNullValueKey({
+      "toAccount": toAccount,
+      "fromAccount": fromAccount,
+      "utcFromTime": utcFromTime,
+      "utcToTime": utcToTime,
+      "bizType": bizType,
+      "extra": extra,
+      "count": count,
+      "extraFilterMap": extraFilterMap,
+      "getAllExtra": getAllExtra,
+      "startSeq": startSeq,
+      "stopSeq": stopSeq,
+    });
+    print(p);
     Response response = await _http!.post(api,
         data: removeMapNullValueKey({
           "toAccount": toAccount,
